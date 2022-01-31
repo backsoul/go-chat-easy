@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-general">
+        <div class="container-status">
+            <p align="center">Estado del servidor</p>
+            <strong id="statusWs">No esta funcionando</strong>
+        </div>
+        <div class="container-apodo">
+            <h4>Ingresa tu apodo</h4>
+            <input type="text" name="txtName" id="txtName" placeholder="Ingresa un nombre de usuario">
+        </div>
+        <div class="container-messages">
+            <div class="list-messages">
+                <div id="listMessages">
+                </div>
+            </div>
+            <div class="container-actions">
+                <input type="text" name="message" id="txtMessage" placeholder="Escribe tu mensaje crack" onkeypress="handle(event)">
+                <button id="btnMessage">Enviar mensaje</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var socket = new WebSocket("ws://localhost:8080/ws");
+        var txtMessage = document.getElementById('txtMessage');
+        var btnMessage = document.getElementById('btnMessage');
+        var statusWs = document.getElementById('statusWs');
+        var listMessages = document.getElementById('listMessages');
+        var txtName = document.getElementById('txtName');
+
+        btnMessage.addEventListener('click', function() {
+
+            sendMessage()
+        });
+
+        function handle(e) {
+            if (e.keyCode === 13) {
+                sendMessage()
+            }
+        }
+
+        function sendMessage() {
+            if (txtName.value == '') {
+                alert('Se requiere un apodo para poder enviar mensajes');
+            }
+            if (txtMessage.value != '') {
+                const data = JSON.stringify({
+                    text: txtMessage.value,
+                    name: txtName.value
+                })
+                socket.send(data);
+                txtMessage.value = '';
+            }
+        }
+
+        socket.onopen = function() {
+            statusWs.innerHTML = 'Esta funcionando correctamente';
+        }
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            listMessages.innerHTML += '<p>' + data.name + ': ' + data.text + '</p>';
+        }
+    </script>
+</body>
+
+</html>

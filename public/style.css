@@ -1,0 +1,61 @@
+.container-general {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-status {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.list-messages {
+    width: 85%;
+    height: 66%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.container-apodo {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.container-messages {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
+    height: 50vh;
+    width: 100%;
+}
+
+#txtMessage {
+    font-size: .6rem;
+    width: 7rem;
+    height: 1rem;
+}
+
+#txtName {
+    width: 11.2rem;
+}
+
+input:placeholder {
+    font-size: .6rem;
+}
+
+.container-actions {
+    display: flex;
+    gap: 0.2rem;
+    margin: 0.5rem;
+}
